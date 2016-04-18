@@ -7,28 +7,43 @@ public class TestTeam extends BaseClass {
 
     private By nastya = By.xpath("(//img[@alt='photo'])[4]");
     private By artem = By.cssSelector("img[src*='Karpov");
+    private By name = By.xpath("//div[@class='greenHeader']");
 
     @Test (expected = NoSuchElementException.class)
 
-    public void testAnastasia() throws Exception {
-        try {
+    public void testPedorenkoAnastasia() throws NoSuchElementException {
+       try {
         driver.findElement(nastya).click();
-        } catch (NoSuchElementException e) {
+       }
+       catch (NoSuchElementException e) {
             System.err.println("No such coach :( " );
-        assertEquals("http://skillsup.ua/about/our-team/anastasia-pedorenko.aspx", driver.getCurrentUrl());
-        System.out.println(driver.getCurrentUrl());
-
         }
+        assertEquals("Анастасия Педоренко", driver.findElement(name).getText());
+        System.out.println(driver.findElement(name).getText()+"-present !!!");
+    }
+
+
+    @Test (expected = NoSuchElementException.class)
+
+    public void testKarpovArtemNeg() throws NoSuchElementException {
+        try {
+            driver.findElement(artem);
+        } catch (NoSuchElementException e) {
+            System.err.println("No such coach - Артём Карпов need to add!!!!  :((");
+        }
+        assertEquals("Артём Карпов", driver.findElement(name).getText());
+        System.out.println(driver.findElement(name).getText());
     }
 
     @Test (expected = NoSuchElementException.class)
 
-    public void testArtem() throws NoSuchElementException {
+    public void testKarpovArtemPos() throws NoSuchElementException {
         try {
             driver.findElement(artem);
         } catch (NoSuchElementException e) {
-            System.err.println("No such coach :( " );//
-
+            System.err.println("No such coach - it's good " );//
         }
+        assertEquals("Наша команда", driver.findElement(name).getText());
+        //System.out.println(driver.findElement(name).getText());
     }
 }
